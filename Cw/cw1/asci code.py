@@ -1,0 +1,6 @@
+a = input('enter yr character:')
+b = input('enter yr second character:')
+c = ord(a) - ord(b)
+print('ascii code of first character:',ord(a))
+print('ascii code of second charactyer:', ord(b))
+print('distance of yr char :', abs(c))
