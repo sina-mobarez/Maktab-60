@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ajax - step 2</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="row my-3">
+            <div class="card w-100">
+                <div class="card-body">
+                    get user list ,
+                    <a href="https://reqres.in/">api sample</a>
+                    <button id="getDataBtn" class="btn btn-primary float-right">get Data</button>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <table class="table responsive" id="userTable">
+                <thead>
+                    <th>id</th>
+                    <th>email</th>
+                    <th>first name</th>
+                    <th>last name</th>
+                    <th>avatar</th>
+                    <th>delete</th>
+                    <th>edit</th>
+
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <table class="table responsive" id="usertb">
+                            <thead>
+                                <th>id</th>
+                                <th>email</th>
+                                <th>first name</th>
+                                <th>last name</th>
+
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(function() {
+            $('#getDataBtn').click(function() {
+                    $.get('https://reqres.in/api/users', function(data, status) {
+                        console.log('status', status)
+
+                        console.log(data.data)
+                        deleteBtn = "<span class='btn btn-danger removeUser'>delete</span>"
+                        editBtn = '<button type="button" class="btn btn-primary edit" data-toggle="modal" data-target="#exampleModal">edit</button>'
+
+
+                        $.each(data.data, function(index, value) {
+
+                            tr_row = "<tr>" +
+                                `<td>${value.id}</td>` +
+                                `<td>${value.email}</td>` +
+                                `<td>${value.first_name}</td>` +
+                                `<td>${value.last_name}</td>` +
+                                `<td><img src="${value.avatar}" alt="" style="width:50px" ></td>` +
+                                `<td>${deleteBtn}</td>` +
+                                `<td>${editBtn}</td>` +
+
+                                "</tr>"
+
+                            // console.log(index +' : ',tr_row)
+                            $('#userTable>tbody').append(tr_row)
+
+
+                        })
+                        $('.edit').click(function() {
+                            console.log('jsjsjsjsjs')
+                            console.log(this)
+                            tr = "<tr>" +
+                                `<td>${$(this).closest('tr').children().filter(':first-child').text()}</td>` +
+                                `<td>${$(this).closest('tr').children().filter(':eq(1)').text()}</td>` +
+                                `<td>${$(this).closest('tr').children().filter(':eq(2)').text()}</td>` +
+                                `<td>${$(this).closest('tr').children().filter(':eq(3)').text()}</td>` +
+
+                                "</tr>"
+                            $('#usertb>tbody').html(tr)
+                        })
+                    })
+                })
+                // part 1
+                // $('.removeUser').click(function() {
+                //         alert('delete this user')
+                //     })
+                // part2
+            $('body').on('click', '.removeUser', function() {
+                $(this).closest('tr').remove()
+            })
+
+
+        })
+    </script>
+
+</body>
+
+</html>

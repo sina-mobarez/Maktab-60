@@ -1,0 +1,311 @@
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>فروشگاه مکتب</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap-rtl.css'%}" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="{% static 'Scripts/jquery-1.10.2.min.js'%}"></script>
+    <script src="{% static 'Scripts/bootstrap-rtl.js'%}"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div id="header" class="row">
+            <nav class="navbar navbar-inverse navbar-fixed-top">
+                <div class="container-fluid">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                      <span class="sr-only">Toggle navigation</span>
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>
+                    </button>
+                        <a class="navbar-brand" href='#'>فروشگاه مکتب</a>
+                    </div>
+
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav">
+                            <li class="active"><a href="#">صفحه ی اصلی<span class="sr-only">(current)</span></a></li>
+                            <li><a href="#">درباره ی ما</a></li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">دسته بندی ها<span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">مبایل</a></li>
+                                    <li><a href="#">محصولات دسته دوم</a></li>
+                                    <li><a href="#">کامبیوتر</a></li>
+                                    <li><a href="#">بازی</a></li>
+
+                                </ul>
+                            </li>
+                        </ul>
+                        <form class="navbar-form navbar-left">
+                            <span class='badge-light badge badge-pill' id='badge_shop'>0</span>
+                            <button type="button" class="btn btn-primary edit" data-toggle="modal" data-target="#exampleModal" id="shop">
+                                <i class="small material-icons">add_shopping_cart</i>
+                                
+                            </button>
+
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="جستجو کنید">
+                            </div>
+                            <button type="submit" class="btn btn-default">
+                          <i class="glyphicon glyphicon-search"></i>
+                      </button>
+                        </form>
+
+                    </div>
+                    <!-- /.navbar-collapse -->
+                </div>
+                <!-- /.container-fluid -->
+            </nav>
+        </div>
+        <div class="row" style="margin-top: 62px">
+
+            <div id="content" class="col-lg-8 col-md-9 col-sm-6 col-xs-12 pull-left">
+
+
+                <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                    <!-- Indicators -->
+                    <ol class="carousel-indicators">
+                        <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                        <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                        <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                    </ol>
+
+                    <!-- Wrapper for slides -->
+                    <div class="carousel-inner" role="listbox">
+                        <div class="item active">
+                            <img src="{% static 'ImagesSlider/lapslid.jpg'%}" width="100%" alt="...">
+                            <div class="carousel-caption">
+
+                            </div>
+                        </div>
+                        <div class="item">
+                            <img src="{% static 'ImagesSlider/laptop slide.jpg'%}" width="100%" alt="...">
+                            <div class="carousel-caption">
+
+
+                            </div>
+                        </div>
+                        <div class="item">
+                            <img src="{% static 'ImagesSlider/laptop-slide.jpg'%}" width="100%" alt="...">
+                            <div class="carousel-caption">
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+            
+            
+                <div class="row" style="margin-top: 10px">
+                {% for item in product%}
+                    <div class="col-sm-6 col-md-6">
+                        <div class="thumbnail">
+                            <img src="{% static 'ImagesSlider/laptop1.jpg'%}" alt="...">
+                            <div class="caption">
+                                <h3>{{item.name}}</h3>
+                                <h5>{{item.price_per_unit}}</h5>
+                                <p>{{item.desc}}</p>
+                                <p><a href="#" class="btn btn-primary buy" role="button">خریدن</a> <button type="button" class="btn btn-primary mmr" data-toggle="modal" data-target="#md">ادامه مطلب</button></p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+
+
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-3 col-sm-6 col-xs-12 pull-right" id="sidebar">
+
+                <div class="panel panel-primary">
+                    <div class="panel-heading">حساب کاربری</div>
+                    <div class="panel-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">ایمیل شما</label>
+                                <input type="email" class="form-control" id="exampleInputEmail1" placeholder="ایمیل شما">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputPassword1">رمز عبور</label>
+                                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="رمز عبور">
+                            </div>
+
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox">ذخیره کردن 
+                                  </label>
+                            </div>
+                            <button type="submit" class="btn btn-success btn-block">وارد شدن</button>
+                        </form>
+                    </div>
+                </div>
+
+
+                <div class="list-group">
+                    <a href="#" class="list-group-item active">
+                          جدیدترین ها
+                        </a>
+                    <a href="#" class="list-group-item">
+                        <span class="badge">99</span> مبایل
+                    </a>
+                    <a href="#" class="list-group-item">
+                        <span class="badge">2</span> تبلت
+                    </a>
+                    <a href="#" class="list-group-item">
+                        <span class="badge">13</span> بازی
+                    </a>
+                    <a href="#" class="list-group-item">
+                        <span class="badge">14</span> فناوری
+                    </a>
+                </div>
+
+
+                <div class="list-group">
+                    <a href="#" class="list-group-item">
+                        <h4 class="list-group-item-heading">انجمن فناوران برتر</h4>
+                        <p class="list-group-item-text">از اخبار و فکت های دنیای تکنولوژی در لحظه با خبر شوید</p>
+                    </a>
+
+
+                    <a href="#" class="list-group-item">
+                        <h4 class="list-group-item-heading">مکتب شریف</h4>
+                        <p class="list-group-item-text">
+                            با ما اماده ی ورود به بازار کار شوید و مهارت خود را تقویت کنید
+                        </p>
+                    </a>
+
+                    <a href="#" class="list-group-item">
+                        <h4 class="list-group-item-heading">گیت هاب </h4>
+                        <p class="list-group-item-text">مرجع کد های ازاد و مکانی برای گردهمایی برنامه نویسان</p>
+                    </a>
+                </div>
+
+                <div class="panel panel-primary">
+                    <div class="panel-heading">شما فروشنده باشید</div>
+                    <div class="sell-section">
+                        <p>با قرار دادن محصول خود در کمتر از یک هفته ان را بفروشید فقط کافیست فرم زیر را بر کنید</p>
+                    </div>
+                    <div class="panel-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="title_product">نام محصول</label>
+                                <input type="text" class="form-control" id="title_product" placeholder="نام تجاری محصول">
+                            </div>
+                            <div class="form-group">
+                                <label for="detail_product">توضیحات درباره محصول</label>
+                                <input type="text" class="form-control" id="detail_product" placeholder="توضیحات">
+                            </div>
+                            <div class="form-group">
+                                <label for="price_product">قیمت محصول</label>
+                                <input type="text" class="form-control" id="price_product" placeholder="قیمت ">
+                            </div>
+                            <div class="form-group">
+                                <label for="img_src">ادرس عکس</label>
+                                <input type="text" class="form-control" id="img_src" placeholder="ادرس عکس">
+                            </div>
+
+
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox">تایید میکنم
+                                  </label>
+                            </div>
+                            <button type="submit" class="btn btn-success btn-block" id="add-product">ثبت کردن</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Get Users</div>
+                    <div class="sell-section">
+                        <p>Just click on the button</p>
+                    </div>
+                    <div class="panel-body">
+                        <form>
+
+
+
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox">Confirm
+                                  </label>
+                            </div>
+                            <button type="submit" class="btn btn-success btn-block go" id="add-product">Go</button>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+        <div id="footer" class="row">
+            <div class="container px-4 px-lg-5 col-md-12 ">
+                <div class="small text-center text-muted" id="foot">کلیه حقوق این سایت متعلق به فروشگاه مکتب میباشد</div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">سبد خرید</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <table class="table responsive" id="usertb">
+                            <thead>
+                                <th>نام محصول</th>
+                                <th>تعداد</th>
+                                <th>مبلغ</th>
+                                <th>حذف کردن</th>
+
+
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">انصراف</button>
+                <button type="button" class="btn btn-primary">ادامه خرید</button>
+            </div>
+        </div>
+    </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="md" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+                </div>
+                <div class="mb">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

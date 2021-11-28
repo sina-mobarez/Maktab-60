@@ -1,0 +1,31 @@
+.perfectly {
+    color: black;
+    border: rgb(78, 92, 219), solid;
+    border-radius: 12px;
+    margin: 12px;
+    background-color: rgb(81, 235, 183);
+    padding: 3%;
+    height: 20%;
+    text-shadow: royalblue;
+    opacity: 70%;
+    font-size: 23 px;
+}
+
+a:hover {
+    color: chartreuse;
+    opacity: 70%;
+}
+
+body {
+    background-image: url("rfgz2O.webp");
+}
+
+div {
+    margin-top: 12%;
+    margin-left: 2%;
+    margin-right: 2%;
+}
+
+.lnk {
+    list-style-type: disc;
+}

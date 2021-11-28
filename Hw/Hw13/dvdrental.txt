@@ -1,0 +1,63 @@
+1.
+\dt
+
+
+2.
+SELECT first_name, last_name FROM customer
+WHERE first_name ~ '^R' OR first_name ~ 'N$';
+
+
+3.
+SELECT first_name, last_name, address FROM customer
+ INNER JOIN address ON customer.address_id=address.address_id WHERE LENGTH(address)> 20;
+
+
+3. 
+# just count 
+SELECT count(address) AS address_count FROM customer 
+INNER JOIN address ON customer.address_id=address.address_id WHERE LENGTH(address)> 20;
+
+
+4.
+SELECT first_name, last_name FROM actor WHERE first_name IN ('Nick', 'Bette', 'Ed');
+
+5.
+SELECT first_name FROM actor
+GROUP BY first_name
+ORDER BY first_name;
+
+5.
+select DISTINCT first_name from actor
+order by first_name;
+
+6.
+SELECT AVG(rental_duration) AS average_rd,
+ SUM(rental_duration) AS sum_rd,
+ MIN(rental_duration) AS minimum_rd,
+ MAX(rental_duration) AS maximum_rd FROM film; 
+
+
+7.
+SELECT first_name, last_name, return_date, amount
+FROM customer 
+INNER JOIN rental USING(customer_id)
+INNER JOIN payment USING(customer_id);
+
+7.
+# no repeatation 
+
+SELECT first_name, last_name, return_date, amount
+FROM customer 
+INNER JOIN rental USING(customer_id)
+INNER JOIN payment USING(customer_id)
+GROUP BY first_name, last_name, return_date, amount;
+
+8.
+SELECT first_name, last_name,
+address, city_id,
+city, country
+from customer 
+Right JOIN address USING(address_id)
+INNER join city USING(city_id)
+INNER JOIN country USING(country_id)
+ORDER BY country;

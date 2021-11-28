@@ -1,0 +1,187 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial;
+    margin: 0;
+    background-image: url(01.jpg);
+}
+
+.header {
+    padding: 60px;
+    text-align: center;
+    color: #416a59;
+}
+
+.navbar {
+    display: flex;
+    background-color: #333;
+    flex-direction: row-reverse;
+}
+
+.navbar a {
+    color: white;
+    padding: 14px 20px;
+    text-decoration: none;
+    text-align: center;
+}
+
+.navbar a:hover {
+    background-color: #ddd;
+    color: black;
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row-reverse;
+    margin: 10px 50px 10px 50px;
+}
+
+.side {
+    flex: 30%;
+    background-color: #f5eec2;
+    padding: 20px;
+    margin-right: 10px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+.main {
+    flex: 69%;
+    background-color: #f5eec2;
+    padding: 20px;
+}
+
+.footer {
+    padding: 20px;
+    text-align: center;
+    color: #416a59;
+}
+
+.active {
+    background-color: rgb(236, 148, 148);
+}
+
+form input {
+    border: none;
+    width: 76%;
+    margin: 5px;
+    float: right;
+    color: transparent;
+}
+
+form button {
+    width: 20%;
+    float: left;
+    border: none;
+    margin-top: 5px;
+}
+
+form::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+form {
+    border: 2px solid;
+    border-radius: 10px;
+    align-items: center;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+#pic {
+    width: 100%;
+}
+
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    border: #39395f solid 1px;
+    margin-top: 10px;
+    border-radius: 10px;
+}
+
+.sidebar a {
+    color: #416a59;
+    padding: 14px 20px;
+    text-decoration: none;
+    text-align: center;
+    border: #39395f solid 1px;
+    border-radius: 5px;
+}
+
+.sidebar a:hover {
+    background-color: #a9c25d;
+    color: black;
+}
+
+#content {
+    width: 66%;
+    float: right;
+}
+
+#hack {
+    width: 30%;
+    float: left;
+    margin: auto;
+}
+
+p {
+    text-align: justify;
+}
+
+h3 {
+    text-align: right;
+}
+
+#contmain {
+    width: 100%;
+    clear: both;
+    padding-top: 10px;
+}
+
+.image {
+    width: 27%;
+}
+
+#audio {
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#imgs {
+    display: flex;
+    justify-content: space-between;
+}
+
+a {
+    text-decoration: none;
+}
+
+@media screen and (max-width: 700px) {
+    .row,
+    .navbar {
+        flex-direction: column;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    #fcontent {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    #content,
+    #hack {
+        width: 100%;
+        float: none;
+    }
+}

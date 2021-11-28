@@ -1,0 +1,71 @@
+1.
+
+from Product.models import *
+from django.db.models import Avg, FloatField
+
+average_price = Product.objects.aggregate(avg=Avg('price_per_unit', output=FloatField()))
+product_price_gt_average = Product.objects.filter(price_per_unit__gt=average_price['avg'])
+
+# for show details of product that price them graet than average of all product's price
+
+for item in product_price_gt_average:
+    vars(item)
+
+
+2. 
+
+from user.models import *
+from trade.models import *
+from django.db.models import Count, Max
+
+
+# sort user by most order
+users_have_most_order = Buyer.objects.annotate(order_count=Count('order')).order_by('-order_count')
+
+# show maximum of order that a user have it 
+
+maximum_order = Buyer.objects.annotate(order_count=Count('order')).aggregate(maximum_order=Max('order_count'))
+
+# user that have maximum order 
+
+users_have_most_order[0]
+
+
+3.
+
+# related_name for transaction > order change to order_paid 
+
+most_product_sold = Product.objects.annotate(most_product_sold=Count('orderitem__order__order_paid')).filter(orderitem__order__order_paid__status_payment='PD').order_by('-most_product_sold')
+
+
+4.
+
+most_catagory_sold = Catagory.objects.annotate(most_sold=Count('product__orderitem__order__order_paid')).filter(product__orderitem__order__order_paid__status_payment='PD').order_by('-most_sold')
+
+
+5.
+
+user_buy_on_monday = Buyer.objects.filter(order__order_paid__status_payment='PD').filter(order__order_paid__date__day=3)
+
+
+6.
+
+# average for tags on product in a lol :/ count is reasonabler
+
+average_of_tag_per_product = Product.objects.annotate(average_tags=Avg('tags'))
+
+# for show just average of tags per product
+
+for item in average_of_tag_per_product:
+    print(item.average_tags)
+    
+ 
+ # count 
+ 
+ count_of_tag_per_product = Product.objects.annotate(count_tag=Avg('tags'))
+ 
+ for item in average_of_tag_per_product:
+    print(item.count_tag)
+ 
+
+

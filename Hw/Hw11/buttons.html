@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="static/style-theme.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <title>Buttons</title>
+</head>
+
+<body>
+    <table class="table responsive" id="table">
+        <thead>
+            <th>id</th>
+            <th>fname</th>
+            <th>lname</th>
+            <th>addrerss</th>
+            <th>status</th>
+            <th>edit</th>
+            <th>delete</th>
+            <th>copy</th>
+        </thead>
+        <tbody>
+            <tr class="r">
+                <td>1201</td>
+                <td>kami</td>
+                <td>jamali</td>
+                <td>isfahan</td>
+                <td>
+                    <!-- <button class="btn btn-primary">edit</button> -->
+                    <button class="btn btn-success" onclick="change(this)" status="enable" id="status">
+                        enable
+                     </button>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#edit" onclick="edit_row_table(this)">modal</button>
+                </td>
+                <td>
+                    <button class="btn btn-danger" onclick="delete_row_table(this)">delete</button>
+                </td>
+                <td>
+                    <button id="copy" class="btn btn-secondary" onclick="clone(this)">copy</button>
+                </td>
+            </tr class="r">
+            <tr>
+                <td>1202</td>
+                <td>sina</td>
+                <td>mobarez</td>
+                <td>tehran</td>
+                <td>
+                    <!-- <button class="btn btn-primary">edit</button> -->
+                    <button type="button" class="btn btn-warning" onclick="change(this)" status="not set" id="status">
+                        not set
+                     </button>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#edit" onclick="edit_row_table(this)">modal</button>
+                </td>
+                <td>
+                    <button class="btn btn-danger" onclick="delete_row_table(this)">delete</button>
+                </td>
+                <td>
+                    <button class="btn btn-secondary" onclick="clone(this)">copy</button>
+                </td>
+            </tr>
+            <tr class="r">
+                <td>1203</td>
+                <td>reza</td>
+                <td>hashemi</td>
+                <td>shiraz</td>
+                <td>
+                    <!-- <button class="btn btn-primary">edit</button> -->
+                    <button type="button" class="btn btn-danger" status="disable" id="status" onclick="change(this)">
+                        disable
+                     </button>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#edit" onclick="edit_row_table(this)">modal</button>
+                </td>
+                <td>
+                    <button class="btn btn-danger" onclick="delete_row_table(this)">delete</button>
+                </td>
+                <td>
+                    <button class="btn btn-secondary" onclick="clone(this)">copy</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <!-- Modal -->
+    <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="editLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editLabel">Edit Tab</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="fname" class="col-form-label">Fname : </label>
+                            <input type="text" class="form-control" id="fname">
+                        </div>
+                        <div class="mb-3">
+                            <label for="lname" class="col-form-label">Lname :</label>
+                            <input type="text" class="form-control" id="lname">
+                        </div>
+                        <div class="mb-3">
+                            <label for="address" class="col-form-label">Address :</label>
+                            <input type="text" class="form-control" id="address">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function edit_row_table(that) {
+            var L = that.closest("tr")
+            document.getElementById('fname').value = L.getElementsByTagName('td')[1].textContent
+            document.getElementById('lname').value = L.getElementsByTagName('td')[2].textContent
+            document.getElementById('address').value = L.getElementsByTagName('td')[3].textContent
+        }
+
+        function delete_row_table(that) {
+
+
+            console.log('this ', that.classList)
+            console.log(that.closest('tr'))
+            that_tr = that.closest('tr').remove()
+
+        }
+
+        function clone(that) {
+            var T = document.getElementById('table');
+
+            var R = that.closest("tr")
+
+            var C = R.cloneNode(true);
+
+            T.appendChild(C);
+
+        }
+
+        function change(that) {
+            btn = that.closest("button")
+
+            if (btn.getAttribute('status') == "disable") {
+                btn.innerHTML = 'not set'
+                btn.setAttribute('status', 'not set')
+                btn.classList.remove("btn-danger");
+                btn.classList.add("btn-warning");
+            } else if (btn.getAttribute('status') == "not set") {
+                btn.innerHTML = 'enable'
+                btn.setAttribute('status', 'enable')
+                btn.classList.remove("btn-warning");
+                btn.classList.add("btn-success");
+            } else {
+                btn.innerHTML = 'disable'
+                btn.setAttribute('status', 'disable')
+
+                btn.classList.remove("btn-success");
+                btn.classList.add("btn-danger");
+            }
+            console.log(btn.getAttribute('status'))
+
+        }
+    </script>
+</body>
+
+</html>
