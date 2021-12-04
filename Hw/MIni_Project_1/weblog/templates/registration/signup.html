@@ -1,0 +1,28 @@
+{% extends "base_account.html" %}
+
+{% block content %}
+<div class="container" style="align-items: center;"!important>
+    
+    <h2 class="text-center mt-5">Sign Up</h2>
+    <hr>
+    <div class="row">
+        <div class="col-4 mx-auto"></div>
+            <form method="POST">
+                {% csrf_token %}
+                {% for field in form %}
+                <div class="form-group">
+                    {{ field.errors }}
+                    <label>{{ field.label_tag }}</label>
+                    <p>{{ field }}</p>
+                </div>
+                {% endfor %}
+                <button type="submit" class="btn btn-primary">Sign up</button>
+                <button type="reset" class="btn btn-primary">Reset</button>
+                <a href="{% url 'login' %}">Already a Member</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

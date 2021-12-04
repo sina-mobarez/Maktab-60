@@ -12,7 +12,6 @@ from . import models
 
 
 class PostAdmin(admin.ModelAdmin):
-    prepopulated_fields = {'slug': ('title',)}
     readonly_fields = ('comment_count',)
 
 

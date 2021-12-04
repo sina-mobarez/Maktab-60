@@ -6,8 +6,9 @@
           <p>Written by : <b>{{post.posted_by}}</b> on <b>{{post.post_date}}</b></p>
           <br>
           <br>
-          <p>{{post.pic.url}}</p>
-          <img src="{{post.pic.url}}" alt="pic">
+          <img style="height: 100%; width: 100%;" src="{{MEDIA_URL}}{{ post.pic }}" alt="pic">
+          <br>
+          <br>
 					<p>{{ post.bodytext }}</p>
           <br>
           <p>{% for tag in post.tag.all %}

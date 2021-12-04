@@ -4,6 +4,7 @@ from django.conf import settings
 from django.db import models
 from django.db.models.signals import post_save
 from django.urls import reverse
+from django.template.defaultfilters import slugify
 
 from .signals import save_comment
 
@@ -38,7 +39,7 @@ def unique_slugify(instance, slug):
 
 class Post(models.Model):
     title = models.CharField(max_length=200, verbose_name=("title"))
-    slug = models.SlugField()
+    slug = models.SlugField(blank=True)
     bodytext = models.TextField(verbose_name=("message"))
     pic = models.ImageField("عکس", upload_to='uploads', height_field=None, width_field=None, max_length=None, blank=True, null=True)
     category = models.ManyToManyField(Category, verbose_name='category of this post')
@@ -63,8 +64,9 @@ class Post(models.Model):
 
     # override the save method for store unique slug
     def save(self, *args, **kwargs):
-        self.slug = unique_slugify(self, self.slug)
-        super().save(*args, **kwargs)
+        if not self.slug:
+            self.slug = unique_slugify(self, slugify(self.title))
+            super().save(*args, **kwargs)
 
     def __str__(self):
         return self.title

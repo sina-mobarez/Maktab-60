@@ -2,7 +2,8 @@ from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.views import APIView
 from .serilizers import *
 
 
@@ -98,3 +99,5 @@ def category_details(request, pk):
     category = get_object_or_404(Category, id=pk)
     serializer = CategorySerializer(category)
     return Response(data=serializer.data, status=200)
+
+

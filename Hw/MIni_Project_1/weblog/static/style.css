@@ -28,7 +28,7 @@ article h2{font-weight:normal;margin-bottom:12px}
 footer{background:#344;max-width:1000px;margin:0 -20px;clear:both;text-align:right}
 footer p{padding:20px;color:#FFF}
 address{padding:10px 20px 30px 10px}
-aside > div{margin:2px auto;background:#344;padding:30px 10px;text-align:center;color:#FFF}
+aside > div{margin:10px auto;background:#344;min-height:150px;padding:30px 10px;text-align:center;color:#FFF}
 a#logo{vertical-align:middle;font-size:40px;color:#344;font-weight:bold;display:block;text-decoration:none;text-align:center;line-height:40px;padding:60px 5px}
 body > section{max-width:1000px;margin:auto;padding:30px 0px;border-bottom:1px solid #999;color:#333}
 #sidebarBackTop{background:#286983;color:#FFF;opacity:0.8;cursor:pointer;display:block;padding:5px}
@@ -57,7 +57,6 @@ footer a{color:#FFF}
 #stick-here{background:red}
 .sidebarToggle #sidebar{display:none}
 .sidebarToggle #main{margin-left:0}
-.right{float: right;}
 @media screen and (max-width:1100px){header{padding:10px}
 #headerLeft{width:auto}
 #headerRight{width:60%}
@@ -67,6 +66,7 @@ footer a{color:#FFF}
 .sidebarToggle #sidebar{background:red;display:block}
 .stick #sidebarContent{bottom:auto}
 a#logo{font-size:20px;line-height:20px;padding:10px 5px}
+aside > div{min-height:20px;padding:10px}
 .sidebarToggle #menuToggle{background:#344;color:#FFF}
 }
 @media screen and (max-width:600px){#headerLeft{float:right}
@@ -81,5 +81,5 @@ header{padding:3px 10px}
 #wrapall{padding-top:46px}
 #sidebarContent{right:0;background:#6f9898}
 #mobileLogo{display:inline-block;font-size:17px;padding:0 3px 0 10px;font-weight:bold;color:#FFF;text-decoration:none}
-#mobileMenuToggle{display:inline-block;}
+#mobileMenuToggle{display:inline-block}
 }
