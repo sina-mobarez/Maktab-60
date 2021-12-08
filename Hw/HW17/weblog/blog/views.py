@@ -1,10 +1,12 @@
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, authentication_classes, permission_classes
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from .serilizers import *
+from rest_framework_simplejwt.tokens import RefreshToken
 
 
 # Create your views here.
@@ -46,6 +48,8 @@ class CategoryDetail(DetailView):
 
 
 @api_view(['GET'])
+# @authentication_classes([SessionAuthentication, BasicAuthentication])
+# @permission_classes([IsAuthenticated])
 def post_list(request):
     post = Post.objects.all()
     serializer = PostSerializer(post, many=True)
@@ -53,6 +57,8 @@ def post_list(request):
 
 
 @api_view(['GET'])
+@authentication_classes([SessionAuthentication, BasicAuthentication])
+@permission_classes([IsAuthenticated])
 def post_details(request, post_id):
     post = get_object_or_404(Post, id=post_id)
     serializer = PostSerializer(post)
@@ -60,6 +66,8 @@ def post_details(request, post_id):
 
 
 @api_view(['GET'])
+@authentication_classes([SessionAuthentication, BasicAuthentication])
+@permission_classes([IsAuthenticated])
 def comment_list(request):
     comment = Comment.objects.all()
     serializer = CommentSerializer(comment, many=True)
@@ -67,6 +75,8 @@ def comment_list(request):
 
 
 @api_view(['GET'])
+@authentication_classes([SessionAuthentication, BasicAuthentication])
+@permission_classes([IsAuthenticated])
 def comment_details(request, id):
     comment = get_object_or_404(Comment, id=id)
     serializer = CommentSerializer(comment)
@@ -74,6 +84,8 @@ def comment_details(request, id):
 
 
 @api_view(['GET'])
+# @authentication_classes([SessionAuthentication, BasicAuthentication])
+# @permission_classes([IsAuthenticated])
 def tag_list(request):
     tag = Tag.objects.all()
     serializer = TagSerializer(tag, many=True)
@@ -81,6 +93,8 @@ def tag_list(request):
 
 
 @api_view(['GET'])
+# @authentication_classes([SessionAuthentication, BasicAuthentication])
+# @permission_classes([IsAuthenticated])
 def tag_details(request, tag_id):
     tag = get_object_or_404(Tag, id=tag_id)
     serializer = TagSerializer(tag)
@@ -88,16 +102,38 @@ def tag_details(request, tag_id):
 
 
 @api_view(['GET'])
+# @authentication_classes([SessionAuthentication, BasicAuthentication])
+# @permission_classes([IsAuthenticated])
 def category_list(request):
     category = Category.objects.all()
     serializer = CategorySerializer(category, many=True)
     return Response(data=serializer.data, status=200)
 
-
 @api_view(['GET'])
+# @authentication_classes([SessionAuthentication, BasicAuthentication])
+# @permission_classes([IsAuthenticated])
 def category_details(request, pk):
     category = get_object_or_404(Category, id=pk)
     serializer = CategorySerializer(category)
     return Response(data=serializer.data, status=200)
 
+
+def get_tokens_for_user(user):
+    refresh = RefreshToken.for_user(user)
+
+    return {
+        'refresh': str(refresh),
+        'access': str(refresh.access_token),
+    }
+
+
+class HelloView(APIView):
+
+    permission_classes = (IsAuthenticated,)
+
+
+
+    def get(self, request):
+         content = {'message': 'Hello, World!'}
+         return Response(content)
 

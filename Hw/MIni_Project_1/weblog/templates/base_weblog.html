@@ -6,14 +6,32 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="canonical" href="https://html5-templates.com/" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <title>{% block title %}{% endblock title %}</title>
     <meta name="description" content="Free responsive website HTML theme with sticky sidebar for both desktop and mobile. ">
     <link rel="stylesheet" href="{% static 'style.css' %}">
     <script src="{% static 'script.js' %}"></script>
-	<style>.jer{
-		margin: 3px!important;}</style>
 </head>
 <body>
+
+{% if messages %}
+    {% for message in messages %}
+		{% if message.tags %}
+<div class="alert alert-{{ message.tags }}alert-dismissible fade show" role="alert">
+		{% endif %}
+  <strong> </strong> {{ message }}
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+    {% endfor %}
+
+{% endif %}
+
 <header>
 	<div id="header">
 		<div class="socialButtons">
@@ -21,6 +39,7 @@
 			<a class="linkedin" href="#">in</a>
 			<a class="youtube" href="#">&#128898;</a>
 			<a class="twitter" href="#">
+			
 			
 <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
@@ -57,6 +76,13 @@
 					<li><a href="{% url 'login' %}">Login</a>
 					{% endif %}
 					<li><a href="{% url 'contact' %}">Contact Us</a>
+					<li><form class="d-flex" method=POST action="{% url 'search' %}"
+						>
+						{% csrf_token %}
+
+						 <input class="form-control mr-2" name='searched' type="search" placeholder="Search" aria-label="Search">
+						  <button class="btn btn-outline-success" type="submit">Search</button>
+						 </form>
 				</ul>
 			</nav>
 		</div>
@@ -66,7 +92,7 @@
 	<div id="sidebar">
 		<div id="stickThis">
 			<div id="sidebarContent">
-				<a id="logo" href="#">Catagories</a>
+				<a id="logo" href="#">{% block name-side %}{% endblock name-side %}</a>
 				<aside>
 					{% block sidebar %}{% endblock sidebar %}
 					<a class="back2Top" href="#">⮝&nbsp;Back to&nbsp;top&nbsp;⮝</a>

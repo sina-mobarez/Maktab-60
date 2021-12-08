@@ -14,5 +14,6 @@ urlpatterns = [
     path('tag/<int:tag_id>', tag_details, name='api_tag_details'),
     path('category/', category_list, name='api_category_list'),
     path('category/<int:pk>', category_details, name='api_category_details'),
+    path('hello/', HelloView.as_view(), name='hello'),
 
 ]

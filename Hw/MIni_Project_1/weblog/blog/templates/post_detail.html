@@ -4,6 +4,10 @@
 					<h2>{{post.title}}</h2>
           <br>
           <p>Written by : <b>{{post.posted_by}}</b> on <b>{{post.post_date}}</b></p>
+          {% if user.is_authenticated and user == post.posted_by %}
+          <p style="float-right"><a href="{% url 'edit_post' slug=post.slug %}">edit</a></p>
+          <p style="float-left"><a href="{% url 'delete-post' slug=post.slug %}">delete</a></p>
+          {% endif %}
           <br>
           <br>
           <img style="height: 100%; width: 100%;" src="{{MEDIA_URL}}{{ post.pic }}" alt="pic">
@@ -11,15 +15,31 @@
           <br>
 					<p>{{ post.bodytext }}</p>
           <br>
-          <p>{% for tag in post.tag.all %}
-              {{tag.name}}<br>
+          <p>{% for tag in tags %}
+            <a href="{% url 'post-tag' tag.id %}" style="text-decoration: none;" !important>{{tag.name}}</a></br>
+ 
           {% endfor %}</p>
+          <br>
+          {% if user.is_authenticated %}
+          <form action="{% url 'like_post' post.slug %}" method="POST">
+            {% csrf_token %}
+            {% if liked %}
+            <button type="submit", name="post_slug", value="{{ post.id }}", class="btn btn-danger btn-sm"> UnLike !</button> - {{ total_likes }}
+            </form>
+            {% else %}
+            <button type="submit", name="post_slug", value="{{ post.id }}", class="btn btn-primary btn-sm"> Like !</button> - {{ total_likes }}
+            </form>
+          {% endif %}
+          {% else %}
+          <p>{{ total_likes }} - likes </p>
+          {% endif %}
+
 				</article>
         <article>
-          <h3> {{post.comment_count}} comments : </h3>
+          <h3> {{comment_count}} comments : </h3>
           <br>
           <br>
-          {% if post.comment_count > 0 %}
+          {% if comment_count > 0 %}
           {% for com in comment %}
           <p><b>{{com.name}}</b> on <i>{{com.created}}</i> says :</p>
           <br>
@@ -33,7 +53,30 @@
           {% endif %}
 
 				</article>
+        <article>
+          {% if user.is_authenticated %}
+          <h3> add comments : </h3>
+          <br>
+          <br>
+          <form action="" method="POST">
+            {% csrf_token %}
+            {% for field in form %}
+            <div class="form-group">
+                {{ field.errors }}
+                <label>{{ field.label_tag }}</label>
+                <p>{{ field }}</p>
+            </div>
+            {% endfor %}
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="reset" class="btn btn-primary">Reset</button>
+        </form>
+
+          {% endif %}
+
+				</article>
 {% endblock content %}
+
+{% block name-side %} Categories {% endblock name-side %}
 
 {% block sidebar %}
   {% for cat in category %}

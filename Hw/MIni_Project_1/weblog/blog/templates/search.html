@@ -1,19 +1,21 @@
 {% extends "base_weblog.html" %}
 {% block title %}
-DashBoard
+search
 {% endblock title %}
 {% block content %}
 {% if posts %}
         <article>
-           <h4> Welcome Dear {{user.username}}</h4>
+            {% if searched %}
+           <h4> You search for {{searched}}</h4>
            <br><br>
+           {% endif %}
+
             <p style="float-right"><a href="{% url 'new_post' %}">new post</a></p>
             <br><br>
             <p style="float-right"><a href="{% url 'edit_profile' %}">Edit Profile</a></p>
             <br><br>
-            <p style="float-right"><a href="{% url 'add-cat-tag' %}">Add Category/Tag</a></p>
-            <br><br>
-           <h2>Posts : </h2>
+            {% if posts %}
+           <h2>find this Posts with title : </h2>
 				</article>
           {% for post in posts %}
 
@@ -33,14 +35,37 @@ DashBoard
 
 
           {% endfor %}
+          {% endif %}
+        </article>
+          {% if posts %}
+          <article>
+          <h2>find this Posts with body : </h2>
+               </article>
+         {% for post in postss %}
+
+       <article>
+                   <h2>{{post.title}}</h2>
+         <br>
+         <p>Written by : <b>{{post.posted_by}}</b> on <b>{{post.post_date}}</b></p>
+         <br>
+         <br>
+                   <p>{{ post.bodytext|truncatewords:20 }}</p>
+         <br>
+         <p><a href={{ post.get_absolute_url }}>read more</a></p>
+               </article>
+                              
+
+
+
+
+         {% endfor %}
+         {% endif %}
+        </article>
 
 {% else %}
 <article>
-    <h2> You Don't any post to show :/ </h2>
-</article>
-<article>
-    <div class="col-6"></div>
-    <button class="btn btn-success"><a href="{% url 'add_post' %}">Create Post</a></button>
+    <h4> You search for {{searched}}</h4>
+    <p> Nothing Found </p>
 </article>
 {% endif %}
 {% endblock content %}
