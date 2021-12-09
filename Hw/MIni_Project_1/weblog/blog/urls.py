@@ -20,6 +20,7 @@ urlpatterns = [
     path('password/', PasswordChangeView.as_view(),{'template_name': 'registration/password_change_form.html'} , name='password_change'),
     path('search/', search, name='search'),
     path('like/<slug:slug>', LikeView, name='like_post'),
+    path('like_cm/<int:id>', Like_comment, name='like_comment'),
     path('add/', add_category_tag, name='add-cat-tag'),
     path('delete/<int:id>', delete_c, name='delete-c'),
     path('delete-t/<int:id>', delete_t, name='delete-t'),

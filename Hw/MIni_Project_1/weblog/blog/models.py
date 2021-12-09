@@ -74,7 +74,7 @@ class Post(models.Model):
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = unique_slugify(self, slugify(self.title))
-            super().save(*args, **kwargs)
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.title
@@ -96,9 +96,13 @@ class Comment(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     active = models.BooleanField(default=True)
+    likes = models.ManyToManyField(User, verbose_name=("likes on post"), related_name= 'blog_comments')
 
     class Meta:
         ordering = ('created',)
+
+    def total_likes(self):
+        return self.likes.count()
 
     def __str__(self):
         return 'Comment by {} on {}'.format(self.name, self.post)

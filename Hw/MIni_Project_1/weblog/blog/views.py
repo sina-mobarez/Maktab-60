@@ -10,6 +10,7 @@ from django.urls.base import reverse_lazy
 from django.utils import timezone
 from django.views import generic
 from django.views.generic import ListView, DetailView
+from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.forms import PasswordChangeForm, UserChangeForm
 from django.contrib.auth.views import PasswordChangeView
 from .forms import *
@@ -35,6 +36,7 @@ class PostList(ListView):
 
 # a function based view for show detail of posts and show them comment under that      
 def post_detail(request, slug):
+    print('oooomad oooonja')
     post = Post.objects.get(slug=slug)
     comment = Comment.objects.filter(post__slug=slug)
     category = Category.objects.all()
@@ -91,6 +93,7 @@ def add_post(request):
             post.posted_by = request.user
             post.save()
             form.save_m2m()
+            messages.success(request,"New Post is Created , congradulations !!")
             return redirect('dashboard')
     else:
         form = PostForm()
@@ -108,6 +111,7 @@ def signup(request):
                 password=form.cleaned_data['password1']
             )
             login(request, new_user)
+            messages.success(request,"Your account created, You're in now :))))) ")
             return redirect('post_list')
     else:
         form = UserCreateForm()
@@ -127,7 +131,7 @@ def contact_form(request):
                 send_mail(subject, message, sender, recipients, fail_silently=True)
             except BadHeaderError:
                 return HttpResponse('Invalid header found')
-            messages.success(request, 'Success, Your email has been sent', 'success')
+            messages.success(request, 'Success, Your email has been sent, and we response to you as soon we can !')
             return redirect('post_list')
     return render(request, 'contact.html', {'form': form})
 
@@ -147,13 +151,17 @@ def edit_post(request, slug):
         form = PostForm(request.POST, request.FILES, instance=post)
         if form.is_valid():
             post = form.save(commit=False)
+            post.title = request.POST['title']
+            print('asasas' ,request.POST)
+            print(request.POST['title'])
             post.posted_by = request.user
             post.modified = timezone.now()
             post.save()
+            messages.info(request,"Your Post modified successfully !")
             return redirect('post_detail', slug=post.slug)
     else:
         form = PostForm(instance=post)
-    return render(request, 'edit_post.html', {'form': form})
+    return render(request, 'edit_post.html', {'form': form, 'post':post})
 
 
 
@@ -161,6 +169,7 @@ class UserEditView(generic.UpdateView):
     form_class = UserChangeForm
     template_name = 'registration/edit_profile.html'
     success_url = reverse_lazy('dashboard')
+    success_message = "%(username)s was edited successfully"
 
     def get_object(self):
         return self.request.user
@@ -170,7 +179,7 @@ class PasswordChangeView(PasswordChangeView):
     form_class = PasswordChangeForm
     success_url = reverse_lazy('password_change_done')
     template_name= 'registration/password_change_form.html'
-
+    success_message = "Your password was changed successfully"
 
 def search(request):
     category = Category.objects.all()
@@ -193,6 +202,21 @@ def LikeView(request, slug):
     else:
         post.likes.add(request.user)
         liked = True
+
+    return HttpResponseRedirect(reverse('post_detail', args=[str(slug)]))
+
+def Like_comment(request, id):
+    print('ooomad injaaaa')
+    comment = get_object_or_404(Comment, id=id)
+    post = Post.objects.get(comments__id=id)
+    print('poste ro peydakard', post)
+    slug = post.slug
+    if comment.likes.all().filter(id=request.user.id).exists():
+        comment.likes.remove(request.user)
+        
+    else:
+        comment.likes.add(request.user)
+       
 
     return HttpResponseRedirect(reverse('post_detail', args=[str(slug)]))
 

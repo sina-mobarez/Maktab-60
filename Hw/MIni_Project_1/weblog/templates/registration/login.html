@@ -1,27 +1,45 @@
 {% extends "base_account.html" %}
-
+{% load widget_tweaks %}
 {% block content %}
 <div class="container">
-    <h2>Login</h2>
+    <div class="row text-center">
+        <div class="col-md-12 mb-4">
+            <div style="box-shadow: 10px 10px 5px grey;" class="col-12">
+    <h1>Login</h1>
+    <hr>
+    <br>
+    <br>
     <form method="POST">
         {% csrf_token %}
-        {% for field in form %}
-        <div class="form-group">
-            {{ field.errors }}
-            <label>{{ field.label_tag }}</label>
-            <p>{{ field }}</p>
+        <div class="">
+        <div class="form-group"> 
+            <label for="InputUser">{{ form.username_label }}</label>
+            {{ form.username|attr:"rows:20"|attr:"cols:20"|attr:"class:form-control"|attr:"placeholder:enter your username"|attr:"id:InputUser" }}
+            <small id="UserlHelp" class="form-text text-muted"></small>
+           
         </div>
-        {% endfor %}
-        <button type="submit" class="btn btn-primary">Login</button>
-        <button type="reset" class="btn btn-primary">Reset</button>
+        <div class="form-group"> 
+            <label for="InputPass">{{ form.username_label }}</label>
+            {{ form.password|attr:"rows:20"|attr:"cols:20"|attr:"class:form-control"|attr:"placeholder:enter your password"|attr:"id:InputPass" }}
+            <small id="UserlHelp" class="form-text text-muted"></small>
+        </div>
+        <div class="row">
+            <div class="col-12 mb-4">
+        <button type="submit" class="btn btn-primary btn-big">Login</button></div>
+        <div class="col-12 mb-4"><button type="reset" class="btn btn-primary">Reset</button></div>
+    </div>
+    </div>
     </form>
-    <div>
+    <div class="mb-3">
         <a href="{% url 'signup' %}">Not a Member...Sign up</a>
 
     </div>
-    <div>
+    <div class="mb-3 pb-4">
         <a href="{% url 'password_reset' %}">Forgot Password</a>
     </div>
+</div>
+</div>
+</div>
 </div>
 
 
