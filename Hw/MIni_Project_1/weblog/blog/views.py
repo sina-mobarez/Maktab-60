@@ -25,7 +25,7 @@ class PostList(ListView):
     template_name = "all_post.html"
 
     def get_queryset(self):
-        return Post.objects.all()
+        return Post.published.all()
 
     def get_context_data(self, **kwargs):
         context = super(PostList, self).get_context_data(**kwargs)
@@ -139,9 +139,10 @@ def contact_form(request):
 @login_required(login_url='login')
 def dashboard(request):
     user = request.user
-    posts = Post.objects.filter(posted_by=user)
+    pposts = Post.published.filter(posted_by=user)
+    dposts = Post.draft.filter(posted_by=user)
     category = Category.objects.all()
-    return render(request, 'dashboard.html', {'posts': posts, 'user': user, 'category': category})
+    return render(request, 'dashboard.html', {'posts_published': pposts,'posts_draft': dposts, 'user': user, 'category': category})
 
 
 # don't save image
@@ -293,3 +294,13 @@ def delete_post(request,slug):
         return redirect(reverse('dashboard'))
 
     return render(request,'delete-post.html',{'post':post})
+
+
+def change_status_post(request, slug):
+    post = get_object_or_404(Post, slug=slug)
+    if post.status == 'DRF':
+        post.status = 'PUB'
+        post.save()
+        messages.success(request,"Your Post published successfully !")
+
+    return HttpResponseRedirect(reverse('dashboard'))

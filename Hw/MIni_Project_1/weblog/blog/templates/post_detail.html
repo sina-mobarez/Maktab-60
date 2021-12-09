@@ -33,8 +33,13 @@
           {% else %}
           <p>{{ total_likes }} - likes </p>
           {% endif %}
-
-				</article>
+          {% if user.is_authenticated and user == post.posted_by and post.status == 'DRF' %}
+          <form action="{% url 'change_status_post' post.slug %}" method="POST">
+            {% csrf_token %}
+          <button type="submit", name="status", value="{{ post.slug }}", class="btn btn-warning btn-sm"> Publish </button>
+				</form>
+        {% endif %}
+        </article>
         <article>
           <h3> {{comment_count}} comments : </h3>
           <br>

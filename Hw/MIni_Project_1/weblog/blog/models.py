@@ -13,6 +13,16 @@ from .signals import save_comment
 
 # Create your models here.
 
+class PublishedManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(status= 'PUB')
+
+class DraftManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(status= 'DRF')
+
+
+
 class Category(models.Model):
     name = models.CharField("name of category", max_length=50)
 
@@ -43,6 +53,12 @@ def unique_slugify(instance, slug):
 
 
 class Post(models.Model):
+    PUBLISHED= 'PUB'
+    DRAFT= 'DRF'
+    STATUS= [
+        (PUBLISHED, 'publish'),
+        (DRAFT, 'draft'),
+    ]
     title = models.CharField(max_length=200, verbose_name=("title"))
     slug = models.SlugField(blank=True)
     bodytext = models.TextField(verbose_name=("message"))
@@ -61,6 +77,11 @@ class Post(models.Model):
         default=True, verbose_name=("allow comments"))
     comment_count = models.IntegerField(
         blank=True, default=0, verbose_name=('comment count'))
+    status= models.CharField('status of post', max_length=3, choices=STATUS, default=PUBLISHED)
+
+    objects= models.Manager()
+    published= PublishedManager()
+    draft= DraftManager()
 
     class Meta:
         verbose_name = ('post')
@@ -108,6 +129,9 @@ class Comment(models.Model):
         return 'Comment by {} on {}'.format(self.name, self.post)
 
     # Hear a signal to save count of comment
+
+
+
 
 
 post_save.connect(save_comment, sender=Comment)
